@@ -10,7 +10,7 @@ export default function Write() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8081/api/post/posts", {
+      const response = await axios.post("https://blog-server-nu-weld.vercel.app/api/post/posts", {
         title,
         description,
         price,

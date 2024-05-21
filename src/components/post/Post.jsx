@@ -8,7 +8,7 @@ export default function Post({ post }) {
 
   const handleLike = async () => {
     try {
-      const response = await axios.put(`http://localhost:8081/api/post/posts/${post._id}/like`);
+      const response = await axios.put(`https://blog-server-nu-weld.vercel.app/api/post/posts/${post._id}/like`);
       setLikes(response.data.likes);
     } catch (error) {
       console.error("Error liking the post:", error);

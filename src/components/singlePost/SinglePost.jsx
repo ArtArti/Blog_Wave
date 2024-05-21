@@ -18,7 +18,7 @@ export default function SinglePost() {
       }
 
       try {
-        const response = await axios.get(`http://localhost:8081/api/post/posts/${postId}`);
+        const response = await axios.get(`https://blog-server-nu-weld.vercel.app/api/post/posts/${postId}`);
         setPost(response.data);
         setEditedDescription(response.data.description || '');
         setEditedPrice(response.data.price || '');

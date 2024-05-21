@@ -9,7 +9,7 @@ export default function Posts() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("http://localhost:8081/api/post/posts");
+        const response = await axios.get("https://blog-server-nu-weld.vercel.app/api/post/posts");
         setPosts(response.data.data); // Access the 'data' property to get the array of posts
       } catch (error) {
         console.error("Error fetching posts:", error);

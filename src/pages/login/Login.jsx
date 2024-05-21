@@ -24,7 +24,7 @@ export default function Login() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8081/api/auth/signin",
+        "https://blog-server-nu-weld.vercel.app/api/auth/signin",
         {
           email,
           password,
@@ -54,7 +54,7 @@ export default function Login() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8081/api/auth/signup",
+        "https://blog-server-nu-weld.vercel.app/api/auth/signup",
         userData
       );
 

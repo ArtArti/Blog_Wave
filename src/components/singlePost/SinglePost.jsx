@@ -5,30 +5,43 @@ import axios from "axios";
 import "./singlePost.css";
 
 export default function SinglePost() {
-  const { postId } = useParams();
-  const [post, setPost] = useState(null); // Changed to null for proper initial state check
+  const { id } = useParams(); // Using 'id' instead of '_id'
+  const [post, setPost] = useState(null);
   const [editedDescription, setEditedDescription] = useState('');
   const [editedPrice, setEditedPrice] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPost = async () => {
-      if (!postId) {
+      if (!id) { // Using 'id' instead of '_id'
         console.error("postId is undefined");
+        setError("Post ID is undefined.");
+        setLoading(false);
         return;
       }
 
+      console.log(`Fetching post with ID: ${id}`);
       try {
-        const response = await axios.get(`https://blog-server-nu-weld.vercel.app/api/post/posts/${postId}`);
-        setPost(response.data);
-        setEditedDescription(response.data.description || '');
-        setEditedPrice(response.data.price || '');
+        const response = await axios.put(`http://localhost:8081/api/post/posts/${id}`);
+        console.log('Fetch response:', response);
+        if (response.status === 200) {
+          setPost(response.data);
+          setEditedDescription(response.data.description || '');
+          setEditedPrice(response.data.price || '');
+        } else {
+          setError(`Error: ${response.status}`);
+        }
       } catch (error) {
         console.error("Error fetching the post:", error);
+        setError(error.response?.data?.message || "Error fetching the post");
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchPost();
-  }, [postId]);
+  }, [id]); // 'id' instead of '_id'
 
   const handleDescriptionChange = (event) => {
     setEditedDescription(event.target.value);
@@ -39,30 +52,39 @@ export default function SinglePost() {
   };
 
   const handleEditSubmit = async () => {
-    if (!postId) {
+    if (!id) { // Using 'id' instead of '_id'
       console.error("postId is undefined");
       return;
     }
 
     try {
-      await axios.put(`http://localhost:8081/api/post/posts/${postId}`, {
+      const response = await axios.put(`http://localhost:8081/api/post/posts/${id}`, { // Using 'id' instead of '_id'
         description: editedDescription,
         price: editedPrice
       });
-      alert('Post updated successfully');
-      setPost((prevState) => ({
-        ...prevState,
-        description: editedDescription,
-        price: editedPrice
-      }));
+      console.log('Edit response:', response);
+      if (response.status === 200) {
+        alert('Post updated successfully');
+        setPost((prevState) => ({
+          ...prevState,
+          description: editedDescription,
+          price: editedPrice
+        }));
+      } else {
+        alert(`Failed to update post: ${response.status}`);
+      }
     } catch (error) {
       console.error('Error updating the post:', error);
       alert('Failed to update post');
     }
   };
 
-  if (!post) {
-    return <div>Loading...</div>; // Show loading indicator while fetching data
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
   }
 
   return (
@@ -103,9 +125,6 @@ export default function SinglePost() {
           value={editedPrice}
           onChange={handlePriceChange}
         />
-        <p className="singlePostDesc text-black">
-          {post.description}
-        </p>
       </div>
     </div>
   );

@@ -267,7 +267,7 @@ export default function Login() {
                     name="role"
                     value={userData.role}
                     onChange={(e) =>
-                      setUserData({ role: e.target.value })
+                      setUserData({ ...userData,role: e.target.value })
                     }
                     required
                   >

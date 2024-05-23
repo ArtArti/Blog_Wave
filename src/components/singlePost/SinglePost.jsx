@@ -23,7 +23,7 @@ export default function SinglePost() {
 
       console.log(`Fetching post with ID: ${id}`);
       try {
-        const response = await axios.put(`http://localhost:8081/api/post/posts/${id}`);
+        const response = await axios.put(`https://blog-server-nu-weld.vercel.app/api/post/posts/${id}`);
         console.log('Fetch response:', response);
         if (response.status === 200) {
           setPost(response.data);

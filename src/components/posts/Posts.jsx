@@ -11,7 +11,7 @@ export default function Posts() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get(`http://localhost:8081/api/post/posts?page=${currentPage}&limit=${postsPerPage}`);
+        const response = await axios.get(`https://blog-server-nu-weld.vercel.app/api/post/posts?page=${currentPage}&limit=${postsPerPage}`);
         setPosts(response.data.data); // Access the 'data' property to get the array of posts
         setTotalPages(Math.ceil(response.data.totalPosts / postsPerPage));
       } catch (error) {

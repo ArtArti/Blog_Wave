@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8081/api';
+const BASE_URL = 'https://blog-server-nu-weld.vercel.app/api';
 
 const api = axios.create({
   baseURL: BASE_URL,

@@ -58,7 +58,7 @@ export default function SinglePost() {
     }
 
     try {
-      const response = await axios.put(`http://localhost:8081/api/post/posts/${id}`, { // Using 'id' instead of '_id'
+      const response = await axios.put(`https://blog-server-nu-weld.vercel.app/post/posts/${id}`, { // Using 'id' instead of '_id'
         description: editedDescription,
         price: editedPrice
       });

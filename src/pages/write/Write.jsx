@@ -1,4 +1,4 @@
-import ApiService from "../../Api/ApiService";
+import  { createPost } from "../../Api/ApiService";
 import "./write.css";
 import { useState } from "react";
 
@@ -11,9 +11,14 @@ export default function Write() {
     event.preventDefault();
     try {
       const post = { title, description, price };
-      const response = await ApiService.createPost(post);
+      const response = await createPost(post);
       console.log("Post created:", response.data);
       alert("success");
+
+      setTitle("");
+      setDescription("");
+      setPrice("");
+
     } catch (error) {
       console.error("Error creating post:", error);
     }

@@ -2,34 +2,30 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
-export default function Login() {
+function Registration() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [userData, setUserData] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
-    role: null, // default role
+    role: "",
   });
 
-  // Registration handler
   const handleSignUp = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
       const response = await axios.post(
-        "https://blog-server-nu-weld.vercel.app/api/auth/signup",
+        "http://localhost:8081/api/auth/signup",
         userData
       );
 
       if (response.data.success) {
         alert("Successfully Registered");
-        // navigate("/register");
+        navigate("/register");
       }
     } catch (error) {
       alert(error.response.data.message);
@@ -38,23 +34,13 @@ export default function Login() {
     }
   };
 
+
   return (
     <div
-      className="hero min-h-screen"
-      style={{ backgroundImage: "url(./assets/Images/computer.jpg)" }}
-    >
-      <div className="hero-overlay bg-opacity-60"></div>
-      <div className="hero-content text-center text-neutral-content">
-        <div className="max-w-md">
-          <label className="swap swap-flip text-9xl">
-            <input type="checkbox" />
-            <div className="swap-on">
-            <h1>flip</h1>
-            </div>
-            {/* Registration form */}
-
-            <div className="swap-off">
-              <form className="card-body" onSubmit={handleSignUp}>
+    className="min-h-screen w-full flex flex-wrap bg-cyan-800 justify-center items-center "
+    style={{ backgroundImage: "url(./Images/cloud.jpg)" }}>
+    <div className=" w-full p-4 max-w-sm bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 m-4"> 
+    <form className="card-body" onSubmit={handleSignUp}>
               <h5 className="text-xl font-medium text-gray-900 dark:text-white">
                   Register yourself!
                 </h5>
@@ -73,7 +59,7 @@ export default function Login() {
                       className="grow"
                       value={userData.name}
                       onChange={(e) =>
-                        setUserData({ ...userData, name: e.target.value })
+                        setUserData({ ...userData,name: e.target.value })
                       }
                       placeholder="Enter your name"
                       required
@@ -169,13 +155,10 @@ export default function Login() {
                     name="role"
                     value={userData.role}
                     onChange={(e) =>
-                      setUserData({ ...userData,role: e.target.value })
+                      setUserData({ role: e.target.value })
                     }
                     required
                   >
-                    <option disabled selected>
-                      Whats Your Role
-                    </option>
                     <option value="buyer" className=" text-black">Buyer</option>
                     <option value="seller" className=" text-black">Seller</option>
                   </select>
@@ -188,16 +171,15 @@ export default function Login() {
                 <label className="label">
                   <Link
                     to="/"
-                    className="label-text-alt text-white hover:bg-orange-400 p-2"
+                    className="label-text-alt link link-hover text-white"
                   >
                     Already have an account? Login
                   </Link>
                 </label>
               </form>
-            </div>
-          </label>
-        </div>
-      </div>
+    </div>
     </div>
   );
 }
+
+export default Registration;

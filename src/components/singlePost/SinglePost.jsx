@@ -4,8 +4,10 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./singlePost.css";
 
+
 export default function SinglePost() {
-  const { id } = useParams(); // Using 'id' instead of '_id'
+
+  const { id } = useParams();
   const [post, setPost] = useState(null);
   const [editedDescription, setEditedDescription] = useState('');
   const [editedPrice, setEditedPrice] = useState('');
@@ -14,7 +16,7 @@ export default function SinglePost() {
 
   useEffect(() => {
     const fetchPost = async () => {
-      if (!id) { // Using 'id' instead of '_id'
+      if (!id) {
         console.error("postId is undefined");
         setError("Post ID is undefined.");
         setLoading(false);
@@ -27,8 +29,10 @@ export default function SinglePost() {
         console.log('Fetch response:', response);
         if (response.status === 200) {
           setPost(response.data);
-          setEditedDescription(response.data.description || '');
-          setEditedPrice(response.data.price || '');
+         setEditedDescription(response.data.description || '');
+
+  // Set initial price value to the current post's price
+  setEditedPrice(response.data.price || '');
         } else {
           setError(`Error: ${response.status}`);
         }
@@ -102,14 +106,6 @@ export default function SinglePost() {
           </div>
         </h1>
         <div className="singlePostInfo">
-          <span>
-            Author:
-            <b className="singlePostAuthor text-black">
-              <Link className="link" to={`/seller/posts?username=${post.username}`}>
-                {post.username}
-              </Link>
-            </b>
-          </span>
           <span>{new Date(post.createdAt).toDateString()}</span>
         </div>
         <label className="text-black">Description</label>
@@ -117,13 +113,15 @@ export default function SinglePost() {
           type="text"
           className="text-black"
           value={editedDescription}
-          onChange={handleDescriptionChange}
+  onChange={handleDescriptionChange}
+  required
         />
         <label className="text-black">Price</label>
         <input
           type="text"
           value={editedPrice}
           onChange={handlePriceChange}
+          required
         />
       </div>
     </div>

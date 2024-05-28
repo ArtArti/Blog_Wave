@@ -19,7 +19,7 @@ const router = createBrowserRouter(
         <>  
         
         {/* <Route path="/" element={<Login/>}/> */}
-        <Route path="/" element={<Verify/>}/>
+        <Route path="/" element={<Verify/>}>
         <Route path="/register" element={<Login/>}/>
         <Route path="/logout" element={<Logout/>}/>
         <Route path="buyer/" element={<Dashboard/>}>
@@ -32,7 +32,7 @@ const router = createBrowserRouter(
            <Route path="write" element={<Write/>} />
            <Route path="settings" element={<Settings /> } />
         </Route>
-
+        </Route>
         </>
        
     ))
